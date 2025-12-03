@@ -16,35 +16,32 @@ export const AuthProvider = ({ children }) => {
     const { user, setAuth, logout: performLogout } = useAuthStore();
 
     // 1. ON MOUNT: Try to get a token silently (Refresh Flow)
-    useEffect(() => {
-        const initAuth = async () => {
-            try {
-                const { refreshToken } = useAuthStore.getState();
-                // We don't read localStorage. We ask the API "Am I logged in?"
-                // The API checks the HttpOnly cookie and returns a new Access Token
-                const { data } = await api.post('/auth/refresh/', refreshToken ? { refresh: refreshToken } : {});
+    // useEffect(() => {
+    //     const initAuth = async () => {
+    //         try {
+    //             const { refreshToken } = useAuthStore.getState();
+    //             // We don't read localStorage. We ask the API "Am I logged in?"
+    //             // The API checks the HttpOnly cookie and returns a new Access Token
+    //             const { data } = await api.post('/auth/refresh/', refreshToken ? { refresh: refreshToken } : {});
 
-                // STORE IN ZUSTAND (Memory)
-                setAuth(data.access);
-            } catch (error) {
-                // If refresh fails, we are effectively logged out
-                console.log("Session invalid or expired");
-                performLogout(); // Clear Zustand
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             // STORE IN ZUSTAND (Memory)
+    //             setAuth(data.access);
+    //         } catch (error) {
+    //             // If refresh fails, we are effectively logged out
+    //             console.log("Session invalid or expired");
+    //             performLogout(); // Clear Zustand
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        initAuth();
-    }, [setAuth, performLogout]);
+    //     initAuth();
+    // }, [setAuth, performLogout]);
 
     // 2. LOGIN: Save to Zustand, not LocalStorage
     const login = async (credentials) => {
         try {
             const data = await loginUser(credentials);
-
-            console.log("Login successful", data);
-
             // Pass ALL 3 arguments now:
             setAuth(data.access, data.refresh);
 
@@ -68,19 +65,26 @@ export const AuthProvider = ({ children }) => {
         }
 
         // 3. Clear store
-        performClientLogout();
+        // performClientLogout();
         router.push("/login");
     };
 
     // Register wrapper
     const register = async (userData) => {
-        return await registerUser(userData);
+        try {
+            const data = await registerUser(userData);
+            setAuth(data.access, data.refresh);
+            
+        } catch (error) {
+            console.error("Register error", err);
+        }
     };
 
     return (
         <AuthContext.Provider value={{ user, loading, login, logout, register }}>
             {/* Wait for the refresh attempt before showing the app */}
-            {!loading && children}
+            {/* {!loading && children} */}
+            {children}
         </AuthContext.Provider>
     );
 };

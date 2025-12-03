@@ -24,3 +24,70 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 } */
+/* Container Override */
+.react-datepicker{
+  display: flex !important;
+}
+.custom-datepicker-wrapper .react-datepicker {
+    border: none;
+    font-family: inherit;
+}
+
+/* Header Styling */
+.custom-datepicker-wrapper .react-datepicker__header {
+    background-color: white;
+    border-bottom: none;
+    padding-top: 10px;
+}
+
+/* Month Name */
+.custom-datepicker-wrapper .react-datepicker__current-month {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+/* Day Names (Su, Mo, Tu...) */
+.custom-datepicker-wrapper .react-datepicker__day-name {
+    color: #474747;
+    width: 2.5rem;
+    font-weight: 400;
+}
+
+/* Days Styling */
+.custom-datepicker-wrapper .react-datepicker__day {
+    width: 2.5rem;
+    line-height: 2.5rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+/* Selected Date Range */
+.custom-datepicker-wrapper .react-datepicker__day--selected,
+.custom-datepicker-wrapper .react-datepicker__day--in-range,
+.custom-datepicker-wrapper .react-datepicker__day--in-selecting-range {
+    background-color: #f2f6fc !important; /* Light blue background for range */
+    color: #1a1a1a !important;
+}
+
+/* Start and End Date Highlight */
+.custom-datepicker-wrapper .react-datepicker__day--range-start,
+.custom-datepicker-wrapper .react-datepicker__day--range-end {
+    background-color: #003b95 !important; /* Dark Blue for edges */
+    color: white !important;
+    border-radius: 4px; /* Slight rounding */
+}
+
+/* Hover Effect */
+.custom-datepicker-wrapper .react-datepicker__day:hover {
+    background-color: #e6e6e6;
+    border-radius: 4px;
+}
+
+/* Navigation Arrows */
+.custom-datepicker-wrapper .react-datepicker__navigation-icon::before {
+    border-color: #474747;
+    border-width: 2px 2px 0 0;
+}

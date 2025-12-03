@@ -7,14 +7,15 @@ import Link from 'next/link'; // <--- FIXED: Import Link
 import { FaGlobe, FaBell, FaUser, FaBars, FaTimes } from 'react-icons/fa';
 import { Heart } from 'lucide-react';
 import { BiCart } from 'react-icons/bi';
-import Container from '../../Shared/Container/Container';
-import { useAuth } from '@/context/AuthContext'; // <--- Integrated Auth
+import Container from '@/components/Shared/Container/Container';
+import useAuthStore from '@/store/useAuthStore';
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user } = useAuth(); // <--- Check if user is logged in
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const logout = useAuthStore((state) => state.logout);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -28,7 +29,7 @@ const Navbar = () => {
     <nav className="bg-white sticky top-0 z-50 shadow-sm">
       <Container>
         <div className="flex justify-between items-center py-4 px-4">
-          
+
           {/* Logo - FIXED: Used Link instead of <a> */}
           <Link href="/" className="flex items-center">
             <Image
@@ -46,9 +47,8 @@ const Navbar = () => {
               <button
                 key={path}
                 onClick={() => router.push(path)}
-                className={`px-4 py-2 text-md font-semibold transition ${
-                  pathname === path ? 'bg-gray-300' : 'hover:bg-gray-200'
-                }`}
+                className={`px-4 py-2 text-md font-semibold transition ${pathname === path ? 'bg-gray-300' : 'hover:bg-gray-200'
+                  }`}
               >
                 {name}
               </button>
@@ -61,13 +61,13 @@ const Navbar = () => {
               icon={<Heart className='w-4 h-4' />}
               onClick={() => router.push('/wishlist')}
             />
-            <IconButton 
-              icon={<BiCart className='w-4 h-4' />} 
-              onClick={() => router.push('/cart')} 
+            <IconButton
+              icon={<BiCart className='w-4 h-4' />}
+              onClick={() => router.push('/cart')}
             />
-            
+
             {/* CONDITIONAL RENDERING: Show User Dropdown OR Login Button */}
-            {user ? (
+            {isAuthenticated ? (
               <UserDropdown />
             ) : (
               <button
@@ -101,21 +101,20 @@ const Navbar = () => {
                     setMobileMenuOpen(false);
                     router.push(path);
                   }}
-                  className={`block w-full text-left px-4 py-3 text-md font-medium ${
-                    pathname === path ? 'bg-gray-300' : 'hover:bg-gray-200'
-                  }`}
+                  className={`block w-full text-left px-4 py-3 text-md font-medium ${pathname === path ? 'bg-gray-300' : 'hover:bg-gray-200'
+                    }`}
                 >
                   {name}
                 </button>
               ))}
-              
+
               <div className="flex items-center justify-around mt-3 px-2 py-2 border-t border-gray-200">
                 <IconButton icon={<FaGlobe />} />
                 <IconButton icon={<FaBell />} />
-                
+
                 {/* Mobile Auth Check */}
-                {user ? (
-                   <UserDropdown />
+                {isAuthenticated ? (
+                  <UserDropdown />
                 ) : (
                   <button
                     onClick={() => router.push('/auth/login')}
@@ -149,9 +148,8 @@ const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
   const router = useRouter();
-  
-  // Get logout function from Auth Hook
-  const { logout } = useAuth(); 
+  const logout = useAuthStore((state) => state.logout);
+
 
   const toggleDropdown = () => setIsOpen(prev => !prev);
 
@@ -166,9 +164,9 @@ const UserDropdown = () => {
   }, []);
 
   const handleLogout = async () => {
-      await logout();
-      setIsOpen(false);
-      // Redirect is usually handled inside logout(), but safe to ensure here if needed
+    await logout();
+    setIsOpen(false);
+    // Redirect is usually handled inside logout(), but safe to ensure here if needed
   };
 
   const menuItems = [

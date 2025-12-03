@@ -54,7 +54,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex justify-center mb-4">
            <Image
-            src={'/Images/logo.svg'}
+            src={'/Images/Logo.svg'}
             width={150}
             height={80}
             alt='Logo'
@@ -129,7 +129,7 @@ export default function LoginPage() {
         {/* Footer */}
         <p className="text-sm text-center text-gray-600 mt-6">
           Don’t have an account?{' '}
-          <Link href="/register" className="text-[#4B75A5] font-medium hover:underline">
+          <Link href="/auth/register" className="text-[#4B75A5] font-medium hover:underline">
             Sign Up
           </Link>
         </p>

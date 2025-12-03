@@ -6,7 +6,7 @@ const useAuthStore = create(
         (set) => ({
             // user: null,
             accessToken: null,
-            refreshToken: null, // <--- Added this field
+            refreshToken: null,
             isAuthenticated: false,
 
             // Action to set data after login/refresh
@@ -30,7 +30,7 @@ const useAuthStore = create(
             storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
 
 
-            partialize: (state) => ({ refreshToken: state.refreshToken, }),
+            // partialize: (state) => ({ refreshToken: state.refreshToken, }),
         }
     )
 );

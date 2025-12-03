@@ -16,12 +16,16 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const registerSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Name is too short')
-    .max(50, 'Name is too long')
-    .required('Name is required'),
+  firstName: Yup.string()
+    .min(2, 'Too short')
+    .max(50, 'Too long')
+    .required('First name is required'),
+  lastName: Yup.string()
+    .min(2, 'Too short')
+    .max(50, 'Too long')
+    .required('Last name is required'),
   email: Yup.string()
-    .email('Please enter a valid email address')
+    .email('Invalid email address')
     .required('Email is required'),
   password: passwordRules,
   confirmPassword: Yup.string()
