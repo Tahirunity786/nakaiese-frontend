@@ -1,35 +1,51 @@
-import React from 'react'
-import Container from '../Container/Container'
-import SearchBar from '../SearchBar/SearchBar'
+// src/components/Hero/Hero.jsx
+import React from 'react';
+import Image from 'next/image'; 
+import Container from '../Container/Container';
+import SearchBar from '../SearchBar/SearchBar';
 import { useTranslations } from 'next-intl';
-
 
 export const Hero = () => {
   const t = useTranslations('HomePage.Hero');
 
-
   return (
-    // Updated min-h to 85vh to allow space for mobile dropdowns
-    <section className="relative w-full min-h-[50vh] flex flex-col items-center justify-center bg-[url('/banner.jpg')] bg-no-repeat bg-center bg-cover mb-12">
-      {/* Dark Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/40"></div>
+    // FIX 1: Changed 'overflow-hidden' to 'overflow-visible' so the popup can extend outside
+    <section className="relative w-full h-[65vh] min-h-[500px] lg:h-[80vh] flex items-center overflow-visible mb-12">
+
+      {/* Background Image Wrapper - We keep overflow-hidden HERE only */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <Image 
+          src="/banner.jpg" 
+          alt="Hero Background" 
+          fill 
+          priority 
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20 md:to-transparent z-0"></div>
+      </div>
 
       {/* Content Container */}
-      <Container className="relative z-10 w-full flex flex-col items-center px-4 md:px-0 mt-16 md:mt-0">
-        <div className="text-center text-white mb-8 md:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold drop-shadow-md leading-tight">
-            {t("title")}
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mt-4 font-medium drop-shadow-sm opacity-90">
-            {t("subtitle")}
-          </p>
+      <Container className="relative z-10 w-full h-full flex flex-col justify-center px-4 sm:px-6 lg:px-8">
+        
+        <div className="w-full max-w-4xl flex flex-col gap-6 md:gap-8">
+          
+          <div className="text-start text-white animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight drop-shadow-lg leading-[1.1]">
+              {t("title")}
+            </h1>
+            <p className="mt-4 md:mt-6 text-lg sm:text-xl md:text-2xl text-gray-100 font-medium max-w-2xl drop-shadow-md leading-relaxed opacity-95">
+              {t("subtitle")}
+            </p>
+          </div>
+
+          {/* Search bar */}
+          <SearchBar />
+
         </div>
 
-        {/* Search Bar Wrapper */}
-        <div className="w-full">
-          <SearchBar />
-        </div>
       </Container>
     </section>
-  )
-}
+  );
+};
