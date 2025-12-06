@@ -10,7 +10,7 @@ export const Hero = () => {
 
   return (
     // Updated min-h to 85vh to allow space for mobile dropdowns
-    <section className="relative w-full min-h-[85vh] flex flex-col items-center justify-center bg-[url('/banner.jpg')] bg-no-repeat bg-center bg-cover mb-12">
+    <section className="relative w-full min-h-[50vh] flex flex-col items-center justify-center bg-[url('/banner.jpg')] bg-no-repeat bg-center bg-cover mb-12">
       {/* Dark Overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-black/40"></div>
 

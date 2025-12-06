@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+// ✅ IMPORT 1: Use custom routing for locale persistence
+import { Link, useRouter } from '@/i18n/routing' 
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/context/AuthContext' 
 import { registerSchema } from '@/validations/authSchemas' 
 import { useAppForm } from '@/hooks/useAppForm' 
@@ -16,8 +17,7 @@ const InputField = ({ label, error, ...props }) => (
     </label>
     <input
       {...props} 
-      // FIX: Ensure value is never undefined. 
-      // If props.value is null/undefined, fallback to empty string.
+      // FIX: Ensure value is never undefined to prevent React uncontrolled input warnings
       value={props.value ?? ''} 
       className={`w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4B75A5] transition-colors ${
         error ? 'border-red-500 focus:ring-red-200' : 'border-gray-300'
@@ -31,11 +31,13 @@ const InputField = ({ label, error, ...props }) => (
 export default function RegisterPage() {
   const { register } = useAuth()
   const router = useRouter()
+  // ✅ Hook for translations
+  const t = useTranslations('Register')
+
   const [globalError, setGlobalError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // Initialize Formik via Custom Hook
   const form = useAppForm(
     // 1. Initial Values
     { 
@@ -64,13 +66,15 @@ export default function RegisterPage() {
         
         await register(apiData)
         
-        setSuccessMessage('Account created successfully! Redirecting...')
+        // Use translated success message
+        setSuccessMessage(t('success'))
         setTimeout(() => {
             router.push('/auth/login') 
         }, 1500)
 
       } catch (error) {
-        setGlobalError(error.response?.data?.message || 'Registration failed. Please try again.')
+        // Use backend error or fallback to translated generic error
+        setGlobalError(error.response?.data?.message || t('error_generic'))
       } finally {
         setLoading(false)
       }
@@ -92,10 +96,13 @@ export default function RegisterPage() {
            />
         </div>
 
+        {/* Title with Rich Text for Blue Styling */}
         <h2 className="text-2xl font-semibold text-center text-gray-800">
-          Create an <span className="text-[#4B75A5]">Account</span>
+          {t.rich('title', {
+            highlight: (chunks) => <span className="text-[#4B75A5]">{chunks}</span>
+          })}
         </h2>
-        <p className="text-center text-sm text-gray-500 mt-1">Join us to get started</p>
+        <p className="text-center text-sm text-gray-500 mt-1">{t('subtitle')}</p>
 
         {/* Success Message */}
         {successMessage && (
@@ -117,38 +124,38 @@ export default function RegisterPage() {
           {/* First Name & Last Name Grid */}
           <div className="grid grid-cols-2 gap-4">
             <InputField 
-              label="First Name"
+              label={t('first_name')}
               type="text"
-              placeholder="John"
+              placeholder={t('first_name_placeholder')}
               {...form.getFieldProps('firstName')} 
             />
             
             <InputField 
-              label="Last Name"
+              label={t('last_name')}
               type="text"
-              placeholder="Doe"
+              placeholder={t('last_name_placeholder')}
               {...form.getFieldProps('lastName')} 
             />
           </div>
 
           <InputField 
-            label="Email address"
+            label={t('email')}
             type="email"
-            placeholder="Enter your email"
+            placeholder={t('email_placeholder')}
             {...form.getFieldProps('email')} 
           />
 
           <InputField 
-            label="Password"
+            label={t('password')}
             type="password"
-            placeholder="Create a password"
+            placeholder={t('password_placeholder')}
             {...form.getFieldProps('password')} 
           />
 
           <InputField 
-            label="Confirm Password"
+            label={t('confirm_password')}
             type="password"
-            placeholder="Confirm your password"
+            placeholder={t('confirm_password_placeholder')}
             {...form.getFieldProps('confirmPassword')} 
           />
 
@@ -164,16 +171,16 @@ export default function RegisterPage() {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
             ) : (
-                "Sign Up"
+                t('submit')
             )}
           </button>
         </form>
 
         {/* Footer */}
         <p className="text-sm text-center text-gray-600 mt-6">
-          Already have an account?{' '}
+          {t('already_have_account')}{' '}
           <Link href="/auth/login" className="text-[#4B75A5] font-medium hover:underline">
-            Sign In
+            {t('sign_in')}
           </Link>
         </p>
       </div>

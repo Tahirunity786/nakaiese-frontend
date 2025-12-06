@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, useTransition } from 'react';
 import Image from 'next/image';
 // ✅ IMPORT 1: Use specific imports from your routing config
-import { usePathname, useRouter, Link } from '@/i18n/routing'; 
+import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 
 import { FaGlobe, FaBell, FaUser, FaBars, FaTimes } from 'react-icons/fa';
@@ -15,15 +15,15 @@ import useAuthStore from '@/store/useAuthStore';
 const Navbar = () => {
   // ✅ Hook for translations
   const t = useTranslations('HomePage.Navbar');
-  
+
   // ✅ Hook to get current active language ('en' or 'fr')
-  const currentLocale = useLocale(); 
+  const currentLocale = useLocale();
 
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
+
   // Handling Language Switch (Toggle between EN and FR)
   const [isPending, startTransition] = useTransition();
   const handleLanguageSwitch = () => {
@@ -73,16 +73,16 @@ const Navbar = () => {
 
           {/* Icons (Desktop) */}
           <div className="hidden md:flex items-center space-x-3">
-             {/* ✅ Language Switcher Button */}
+            {/* ✅ Language Switcher Button */}
             <div className="relative group">
-               <IconButton 
-                 icon={<FaGlobe className={isPending ? 'opacity-50' : ''} />} 
-                 onClick={handleLanguageSwitch} 
-               />
-               {/* Tooltip to show current lang */}
-               <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                 {currentLocale.toUpperCase()}
-               </span>
+              <IconButton
+                icon={<FaGlobe className={isPending ? 'opacity-50' : ''} />}
+                onClick={handleLanguageSwitch}
+              />
+              {/* Tooltip to show current lang */}
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+                {currentLocale.toUpperCase()}
+              </span>
             </div>
 
             <IconButton
@@ -96,7 +96,7 @@ const Navbar = () => {
 
             {/* CONDITIONAL RENDERING */}
             {isAuthenticated ? (
-              <UserDropdown t={t} /> 
+              <UserDropdown t={t} />
             ) : (
               <button
                 onClick={() => router.push('/auth/login')}
@@ -109,11 +109,11 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex gap-2">
-             {/* Added Lang Switcher to Mobile Header too */}
-             <IconButton 
-                 icon={<FaGlobe className={isPending ? 'opacity-50' : ''} />} 
-                 onClick={handleLanguageSwitch} 
-             />
+            {/* Added Lang Switcher to Mobile Header too */}
+            <IconButton
+              icon={<FaGlobe className={isPending ? 'opacity-50' : ''} />}
+              onClick={handleLanguageSwitch}
+            />
             <button
               onClick={toggleMobileMenu}
               className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
@@ -199,7 +199,7 @@ const UserDropdown = ({ t }) => {
 
   const menuItems = [
     { label: t('profile'), onClick: () => { setIsOpen(false); router.push('/profile'); } },
-    { label: t('bookings'), onClick: () => { setIsOpen(false); router.push('/profile'); } }, 
+    { label: t('bookings'), onClick: () => { setIsOpen(false); router.push('/profile'); } },
     { label: t('logout'), onClick: handleLogout },
   ];
 
