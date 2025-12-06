@@ -1,6 +1,33 @@
 {
   "HomePage": {
-    "title": "Find your next stay",
-    "search": "Search"
+    "Navbar": {
+      "home": "Accueil",
+      "hotels": "Hôtels",
+      "restaurants": "Restaurants",
+      "login": "Se connecter",
+      "profile": "Profil",
+      "bookings": "Mes réservations",
+      "logout": "Se déconnecter",
+      "wishlist": "Favoris",
+      "cart": "Panier"
+    },
+    "Hero": {
+      "title": "Trouvez votre prochain séjour",
+      "subtitle": "Votre porte d'entrée vers l'exceptionnel."
+    }
+  },
+  "SearchBar": {
+    "slogan": "Où allez-vous ?",
+    "subslogan": "Destinations populaires",
+    "checkin": "Arrivée",
+    "checkout": "Départ",
+    "addDate": "Ajouter",
+    "adults": "Adultes",
+    "children": "Enfants",
+    "rooms": "Chambres",
+    "guests_summary": "{adults} adultes · {children} enfants · {rooms} chambre",
+    "pets_question": "Voyagez-vous avec des animaux ?",
+    "done": "Terminé",
+    "search": "Rechercher"
   }
 }

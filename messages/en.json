@@ -1,6 +1,33 @@
 {
   "HomePage": {
-    "title": "Find your next stay",
+    "Navbar": {
+      "home": "Home",
+      "hotels": "Hotels",
+      "restaurants": "Restaurants",
+      "login": "Sign In",
+      "profile": "Profile",
+      "bookings": "My Bookings",
+      "logout": "Logout",
+      "wishlist": "Wishlist",
+      "cart": "Cart"
+    },
+    "Hero": {
+      "title": "Find your next stay",
+      "subtitle": "Your gateway to the exceptional."
+    }
+  },
+  "SearchBar": {
+    "slogan": "Where are you going?",
+    "subslogan": "Popular destinations",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "addDate": "Add Date",
+    "adults": "Adults",
+    "children": "Children",
+    "rooms": "Rooms",
+    "guests_summary": "{adults} adults · {children} children · {rooms} room",
+    "pets_question": "Travelling with pets?",
+    "done": "Done",
     "search": "Search"
   }
 }
